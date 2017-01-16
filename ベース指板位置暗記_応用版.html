@@ -6,19 +6,21 @@
 			var flag = 1;
 			var base_x = 25;
 			var base_y = 14;
-			var base_width = 500;
-			var line_spaceh = 30;
+			var base_width = 0;
+			var line_spaceh = 0;
 			var finger_num = 14;
 
 			function random_question(){
 				if(flag == 0 ){
 					flag = 1;
-					var ans = document.getElementById("answer").innerHTML;
+
+					var rect_el = document.querySelector(".answer");
+					var ans = rect_el.textContent;
 					var line_col = document.querySelectorAll(".Question_Line");
 					for(i = 0; i < line_col.length; ++i){
 						if(ans == line_col[i].getAttribute("Interval")){
 							line_col[i].setAttribute("stroke","red");
-							line_col[i].setAttribute("stroke-width",5.0);
+							line_col[i].setAttribute("stroke-width",10.0);
 						}
 					}
 				} else {
@@ -26,7 +28,9 @@
 
 					var Inter = ["Ｃ","Ｃ♯/Ｄ♭","Ｄ","Ｄ♯/Ｅ♭","Ｅ","Ｆ","Ｆ♯/Ｇ♭","Ｇ","Ｇ♯/Ａ♭","Ａ","Ａ♯/Ｂ♭","Ｂ"];
 					var selectnum = Math.floor(Math.random() * Inter.length);
-					document.getElementById("answer").innerHTML = Inter[selectnum];
+
+					var rect_el = document.querySelector(".answer");
+					rect_el.textContent = Inter[selectnum];
 
 					var line_col = document.querySelectorAll(".Question_Line");
 					
@@ -45,9 +49,12 @@
 
 			function default_set(){
 				var NS = "http://www.w3.org/2000/svg";
-				var x = 0;
-				var y = 0;
 				var svg1 = document.getElementById("field01");
+				base_width = document.documentElement.clientWidth - (3 * base_x);
+				base_width = base_width - base_width /28;
+				line_spaceh = 30 * (base_width) / 500
+				svg1.setAttribute("width",document.documentElement.clientWidth);
+				svg1.setAttribute("height",document.documentElement.clientHeight);
 
 
 				var datalist = [
@@ -55,6 +62,17 @@
 					["Ｄ","Ｄ♯/Ｅ♭","Ｅ","Ｆ","Ｆ♯/Ｇ♭","Ｇ","Ｇ♯/Ａ♭","Ａ","Ａ♯/Ｂ♭","Ｂ","Ｃ","Ｃ♯/Ｄ♭","Ｄ","Ｄ♯/Ｅ♭"],
 					["Ａ","Ａ♯/Ｂ♭","Ｂ","Ｃ","Ｃ♯/Ｄ♭","Ｄ","Ｄ♯/Ｅ♭","Ｅ","Ｆ","Ｆ♯/Ｇ♭","Ｇ","Ｇ♯/Ａ♭","Ａ","Ａ♯/Ｂ♭"],
 					["Ｅ","Ｆ","Ｆ♯/Ｇ♭","Ｇ","Ｇ♯/Ａ♭","Ａ","Ａ♯/Ｂ♭","Ｂ","Ｃ","Ｃ♯/Ｄ♭","Ｄ","Ｄ♯/Ｅ♭","Ｅ","Ｆ"]];
+
+				var text01 = document.createElementNS(NS, "text");
+				text01.textContent = "Ｃ";
+				text01.setAttribute("x",base_x );
+				text01.setAttribute("y",0);
+				text01.setAttribute("dominant-baseline","text-before-edge");
+				text01.setAttribute("font-size",base_width/28);
+				text01.setAttribute("class","answer");
+				svg1.appendChild(text01);
+
+				base_y = base_width/21;
 
 
 				//罫線
@@ -90,11 +108,13 @@
 						}
 						svg1.appendChild(line01);
 					}
-			
+
 					var text01 = document.createElementNS(NS, "text");
 					text01.textContent = i;
-					text01.setAttribute("x",base_x + (base_width * i / (finger_num - 1)));
-					text01.setAttribute("y",base_y + 4 * line_spaceh  + 30);
+					text01.setAttribute("x",base_x + (base_width * i / (finger_num - 1)) );
+					text01.setAttribute("y",base_y + 4 * line_spaceh + base_width/56);
+					text01.setAttribute("dominant-baseline","text-before-edge");
+					text01.setAttribute("font-size",base_width/28);
 					svg1.appendChild(text01);
 
 				}
@@ -103,9 +123,7 @@
  		</script>
 	</head>
 	<body >
-		<div id="answer">Ｃ</div>
-		<br>
-		<svg id="field01" width="800" height="180" onclick="random_question();">
+		<svg id="field01" onclick="random_question();">
 		</svg>
 
 		<script>
