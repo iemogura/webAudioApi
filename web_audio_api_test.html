@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+	<head>
+		<meta charset="UTF-8">
+		<title>初見トレーニング</title>
+		<script>
+			var audioctx = null;
+			if(window.AudioContext){
+				audioctx = new AudioContext();
+			} else if(window.webkitAudioContext){
+				audioctx = new webkitAudioContext();
+			}
+
+			var osc_node = audioctx.createOscillator();
+			osc_node.type = "square";	osc_node.type = "sawtooth";
+			osc_node.type = "sine";
+			osc_node.frequency.value = 440;
+			osc_node.connect(audioctx.destination);
+			osc_node.start(0);
+
+			function setVal(){
+				var fre_val = 40;
+				document.getElementById("range_id").value = fre_val;
+				osc_node.frequency.value = fre_val;
+				document.getElementById("valBox").innerHTML=fre_val;
+			}
+S
+			function showVal(newVal){
+				document.getElementById("valBox").innerHTML=newVal;
+				osc_node.frequency.value = newVal;
+			}
+
+
+		</script>
+		<style type="text/css">
+			[type="range"] {
+				margin-top:25%;
+				-webkit-transform:rotate(90deg);
+				   -moz-transform:rotate(90deg);
+				     -o-transform:rotate(90deg);
+				        transform:rotate(90deg);
+			}
+		</style>
+
+	</head>
+	<body>
+		<button onclick="osc_node.stop(0);">ストップ</button>
+
+		<br>
+		<span id="valBox">440</span>hz
+		<br>
+		<input type="range" id="range_id" min="0" max="4400" step="1"
+		oninput="showVal(this.value)" onchange="showVal(this.value)">
+		<script>
+			setVal();
+		</script>
+	</body>
+</html>
