@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+	<head>
+		<meta charset="UTF-8">
+		<title>初見トレーニング</title>
+		<script>
+			var timer;	//	タイマーのオンオフ
+
+			var first_pos = [[130.812782650299,170,0,5],
+							[138.591315488436,170,1,5],
+							[138.591315488436,165,2,1],
+							[146.832383958704,165,0,1],
+							[155.56349186104,165,1,1],
+							[155.56349186104,160,2,2],
+							[164.813778456435,160,0,2],
+							[174.614115716502,155,0,0],
+							[184.997211355817,155,1,0],
+							[184.997211355817,150,2,0],
+							[195.997717990875,150,0,0],
+							[207.652348789973,150,1,0],
+							[207.652348789973,145,2,0],
+							[220,145,0,0],
+							[233.081880759045,145,1,0],
+							[233.081880759045,140,2,0],
+							[246.941650628062,140,0,0],
+							[261.625565300599,135,0,0],
+							[277.182630976872,135,1,0],
+							[277.182630976872,130,2,0],
+							[293.664767917408,130,0,0],
+							[311.126983722081,130,1,0],
+							[311.126983722081,125,2,0],
+							[329.62755691287,125,0,0],
+							[349.228231433004,120,0,0],
+							[369.994422711634,120,1,0],
+							[369.994422711634,115,2,0],
+							[391.995435981749,115,0,0],
+							[415.304697579945,115,1,0],
+							[415.304697579945,110,2,0],
+							[440,110,0,0],
+							[466.16376151809,110,1,0],
+							[466.16376151809,105,2,0],
+							[493.883301256124,105,0,0],
+							[523.251130601197,100,0,2],
+							[554.365261953744,100,1,2],
+							[554.365261953744,95,2,3],
+							[587.329535834815,95,0,3],
+							[622.253967444162,95,1,3],
+							[466.16376151809,85,2,1],
+							[493.883301256124,85,0,1],
+							[523.251130601197,80,0,2],
+							[554.365261953744,80,1,2],
+							[554.365261953744,75,2,0],
+							[587.329535834815,75,0,0],
+							[622.253967444162,75,1,0],
+							[622.253967444162,70,2,0],
+							[659.25511382574,70,0,0],
+							[698.456462866008,65,0,0],
+							[739.988845423269,65,1,0],
+							[739.988845423269,60,2,0],
+							[783.990871963499,60,0,0],
+							[830.60939515989,60,1,0],
+							[830.60939515989,55,2,0],
+							[880,55,0,0],
+							[932.32752303618,55,1,0],
+							[932.32752303618,50,2,0],
+							[987.766602512248,50,0,0],
+							[1046.50226120239,45,0,0],
+							[1108.73052390749,45,1,0],
+							[1108.73052390749,40,2,0],
+							[1174.65907166963,40,0,0],
+							[1244.50793488832,40,1,0],
+							[1244.50793488832,35,2,0],
+							[1318.51022765148,35,0,0],
+							[1396.91292573202,30,0,0],
+							[1479.97769084654,30,1,0],
+							[1479.97769084654,25,2,0],
+							[1567.981743927,25,0,0],
+							[1661.21879031978,25,1,0],
+							[1661.21879031978,20,2,2],
+							[1760,20,0,2],
+							[1864.65504607236,20,1,2],
+							[1864.65504607236,15,2,3],
+							[1975.5332050245,15,0,3],
+							[2093.00452240479,10,0,4]];
+
+			function make_(){
+				var NS = "http://www.w3.org/2000/svg";
+				var rand = Math.floor( Math.random() * 76 ) ;
+				var x = 250;
+				var y = first_pos[rand][1];
+
+				var disp_sh;
+				var disp_fl;
+				if(first_pos[rand][2] == 0){
+					disp_sh = "none";
+					disp_fl = "none";
+				} else if (first_pos[rand][2] == 1){
+					disp_sh = "inline";
+					disp_fl = "none";
+				} else {
+					disp_sh = "none";
+					disp_fl = "inline";
+				}
+				var disp_ln01,disp_ln02;
+				if(first_pos[rand][3] == 0){
+					disp_ln01 = "none";
+					disp_ln02 = "none";
+				} else if(first_pos[rand][3] == 4 || first_pos[rand][3] == 5){
+					disp_ln01 = "inline";
+					disp_ln02 = "inline";
+				} else {
+					disp_ln01 = "inline";
+					disp_ln02 = "none";
+				}
+
+				var line_y1 = 0,line_y2 = 0;
+				switch (first_pos[rand][3]) {
+					case 1:
+						line_y1 = y - 5;
+						line_y2 = y - 5;
+						break;
+					case 2:
+						line_y1 = y;
+						line_y2 = y;
+						break;
+					case 3:
+						line_y1 = y + 5;
+						line_y2 = y + 5;
+						break;
+					case 4:
+						line_y1 = y;
+						line_y2 = y + 10;
+						break;
+					case 5:
+						line_y1 = y;
+						line_y2 = y - 10;
+						break;
+				}
+
+
+
+				var svg1 = document.getElementById("field01");
+				//音符
+				var ellipse01 = document.createElementNS(NS, "ellipse");
+				ellipse01.setAttribute("class","note");
+				ellipse01.setAttribute("cx",x+21);
+				ellipse01.setAttribute("cy",y);
+				ellipse01.setAttribute("rx",6);
+				ellipse01.setAttribute("ry",4);
+				ellipse01.setAttribute("fill-opacity",0.0);
+				ellipse01.setAttribute("stroke","black");
+				ellipse01.setAttribute("stroke-width",2.0);
+				ellipse01.setAttribute("p_flag","0");
+				ellipse01.setAttribute("freq",first_pos[rand][0]);
+
+				svg1.appendChild(ellipse01);
+
+				//５線符外の補助線を引く
+				//１本目
+				var line06 = document.createElementNS(NS, "line");
+				line06.setAttribute("class","note_line");
+				line06.setAttribute("x1",x+21-12);
+				line06.setAttribute("y1",line_y1);
+				line06.setAttribute("x2",x+21+12);
+				line06.setAttribute("y2",line_y1);
+				line06.setAttribute("stroke","black");
+				line06.setAttribute("stroke-width",2.0);
+				line06.setAttribute("display",disp_ln01);
+
+				svg1.appendChild(line06);
+
+				//２本目
+				var line07 = document.createElementNS(NS, "line");
+				line07.setAttribute("class","note_line");
+				line07.setAttribute("x1",x+21-12);
+				line07.setAttribute("y1",line_y2);
+				line07.setAttribute("x2",x+21+12);
+				line07.setAttribute("y2",line_y2);
+				line07.setAttribute("stroke","black");
+				line07.setAttribute("stroke-width",2.0);
+				line07.setAttribute("display",disp_ln02);
+
+				svg1.appendChild(line07);
+
+
+
+
+
+
+				//♯座標指定をする
+				var line_xy = [[3,7,3,26],[7,4,7,23],[0,15,10,8],[0,22,10,15]];
+
+				for(var i=0;i<line_xy.length;++i){
+					line_xy[i][0] = x + line_xy[i][0];
+					line_xy[i][1] = y + line_xy[i][1] - 15;
+					line_xy[i][2] = x + line_xy[i][2];
+					line_xy[i][3] = y + line_xy[i][3] - 15;
+				}
+
+
+				//♯１
+				var line01 = document.createElementNS(NS, "line");
+				line01.setAttribute("class","♯");
+				line01.setAttribute("x1",line_xy[0][0]);
+				line01.setAttribute("y1",line_xy[0][1]);
+				line01.setAttribute("x2",line_xy[0][2]);
+				line01.setAttribute("y2",line_xy[0][3]);
+				line01.setAttribute("stroke","black");
+				line01.setAttribute("stroke-width",2.0);
+				line01.setAttribute("display",disp_sh);
+
+				svg1.appendChild(line01);
+
+
+				//♯２
+				var line02 = document.createElementNS(NS, "line");
+				line02.setAttribute("class","♯");
+				line02.setAttribute("x1",line_xy[1][0]);
+				line02.setAttribute("y1",line_xy[1][1]);
+				line02.setAttribute("x2",line_xy[1][2]);
+				line02.setAttribute("y2",line_xy[1][3]);
+				line02.setAttribute("stroke","black");
+				line02.setAttribute("stroke-width",2.0);
+				line02.setAttribute("display",disp_sh);
+
+				svg1.appendChild(line02);
+
+				//♯３
+				var line03 = document.createElementNS(NS, "line");
+				line03.setAttribute("class","♯");
+				line03.setAttribute("x1",line_xy[2][0]);
+				line03.setAttribute("y1",line_xy[2][1]);
+				line03.setAttribute("x2",line_xy[2][2]);
+				line03.setAttribute("y2",line_xy[2][3]);
+				line03.setAttribute("stroke","black");
+				line03.setAttribute("stroke-width",2.0);
+				line03.setAttribute("display",disp_sh);
+
+				svg1.appendChild(line03);
+
+				//♯４
+				var line04 = document.createElementNS(NS, "line");
+				line04.setAttribute("class","♯");
+				line04.setAttribute("x1",line_xy[3][0]);
+				line04.setAttribute("y1",line_xy[3][1]);
+				line04.setAttribute("x2",line_xy[3][2]);
+				line04.setAttribute("y2",line_xy[3][3]);
+				line04.setAttribute("stroke","black");
+				line04.setAttribute("stroke-width",2.0);
+				line04.setAttribute("display",disp_sh);
+
+				svg1.appendChild(line04);
+
+				var line_xy = [[3,1],[3,19]];
+				for(var i=0;i<line_xy.length;++i){
+					line_xy[i][0] = x + line_xy[i][0];
+					line_xy[i][1] = y + line_xy[i][1] - 15;
+				}
+
+				//♭１
+				var line05 = document.createElementNS(NS, "line");
+				line05.setAttribute("class","♭");
+				line05.setAttribute("x1",line_xy[0][0]);
+				line05.setAttribute("y1",line_xy[0][1]);
+				line05.setAttribute("x2",line_xy[1][0]);
+				line05.setAttribute("y2",line_xy[1][1]);
+				line05.setAttribute("stroke","black");
+				line05.setAttribute("stroke-width",2.0);
+				line05.setAttribute("display",disp_fl);
+
+				svg1.appendChild(line05);
+
+
+				var path_xy = [[3,19],[3,4],[18,14],[3,19]];
+				for(var i=0;i<path_xy.length;++i){
+					path_xy[i][0] = x + path_xy[i][0];
+					path_xy[i][1] = y + path_xy[i][1] - 15;
+				}
+				var path_str = "M "+path_xy[0][0]+" , "+path_xy[0][1]+" C "+path_xy[1][0]+" , "+path_xy[1][1]+" , "+path_xy[2][0]+" , "+path_xy[2][1]+" , "+path_xy[3][0]+" , "+path_xy[3][1];
+
+				//♭２
+				var path01 = document.createElementNS(NS, "path");
+				path01.setAttribute("class","♭");
+				path01.setAttribute("d",path_str);
+				path01.setAttribute("stroke","black");
+				path01.setAttribute("stroke-width",2.0);
+				path01.setAttribute("fill","none");
+				path01.setAttribute("display",disp_fl);
+
+				svg1.appendChild(path01);
+
+
+			}
+
+
+			var audioctx = null;
+			if(window.AudioContext){
+				audioctx = new AudioContext();
+			} else if(window.webkitAudioContext){
+				audioctx = new webkitAudioContext();
+			}
+
+			var osc_node = audioctx.createOscillator();
+			var gain_node = audioctx.createGain();
+			osc_node.type = "square";	osc_node.type = "sawtooth";
+			osc_node.type = "sine";
+			osc_node.connect(gain_node);
+			gain_node.gain.value = 0.0;
+			gain_node.connect(audioctx.destination);
+
+			osc_node.start(0);
+
+			function sound1(){
+				//タイミングが来たら音をならす
+				var rect_el = document.querySelectorAll(".note");
+				for(var i=0;i<rect_el.length;++i){
+					if( (parseFloat(rect_el[i].getAttribute('cx')) < 20) && (rect_el[i].getAttribute('p_flag') == "0")){
+						rect_el[i].setAttribute('p_flag',"1");
+						osc_node.frequency.value = parseFloat(rect_el[i].getAttribute('freq'));
+					}
+				}
+			}
+			function mute(val) {
+				gain_node.gain.value = val;
+				document.getElementById("valBox1").innerHTML=val;
+			}
+
+			function reset_pos() {
+				//ノーツ移動関数
+				//移動量
+				var move_x = parseFloat(document.getElementById("range_id2").value);
+				//音符座標指定をする
+				var rect_el = document.querySelectorAll(".note");
+
+				for(var i=0;i<rect_el.length;++i){
+					rect_el[i].setAttribute('cx',parseFloat(rect_el[i].getAttribute('cx'))+move_x);
+				}
+
+				//補助線を指定をする
+				var rect_el = document.querySelectorAll(".note_line");
+				for(var i=0;i<rect_el.length;++i){
+					rect_el[i].setAttribute('x1',parseFloat(rect_el[i].getAttribute('x1'))+move_x);
+					rect_el[i].setAttribute('x2',parseFloat(rect_el[i].getAttribute('x2'))+move_x);
+				}
+
+
+				//♯座標指定をする
+				var rect_el = document.querySelectorAll(".♯");
+				for(var i=0;i<rect_el.length;++i){
+					rect_el[i].setAttribute('x1',parseFloat(rect_el[i].getAttribute('x1'))+move_x);
+					rect_el[i].setAttribute('x2',parseFloat(rect_el[i].getAttribute('x2'))+move_x);
+				}
+
+
+				//♭座標指定をする
+				var rect_el = document.querySelectorAll(".♭");
+
+				for(var i=0;i<rect_el.length;++i){
+					if(rect_el[i].tagName == 'path'){
+						var zahyo = rect_el[i].getAttribute('d');
+						var e = zahyo.split(" ");
+						e[1] = parseFloat(e[1]) + move_x;
+						e[5] = parseFloat(e[5]) + move_x;
+						e[9] = parseFloat(e[9]) + move_x;
+						e[13] = parseFloat(e[13]) + move_x;
+						var f = e.join(" ");
+						rect_el[i].setAttribute('d',f);
+					}
+					if(rect_el[i].tagName == 'line'){
+						rect_el[i].setAttribute('x1',parseFloat(rect_el[i].getAttribute('x1'))+move_x);
+						rect_el[i].setAttribute('x2',parseFloat(rect_el[i].getAttribute('x2'))+move_x);
+					}
+				}
+			}
+
+
+			function disp_shfl(flag1) {
+				//♯♭を表示非表示にする
+				//０非表示　１♭表示　２♯表示
+				var rect_elfl = document.querySelectorAll(".♭");
+				var rect_elsh = document.querySelectorAll(".♯");
+				var parafl = 'none';
+				var parash = 'none';
+				if( flag1 == 0 ){
+					parafl = 'none';
+					parash = 'none';
+				} else if ( flag1 == 1 ) {
+					parafl = 'inline';
+					parash = 'none';
+				} else {
+					parafl = 'none';
+					parash = 'inline';
+				}
+				for(var i=0;i<rect_elfl.length;++i){
+					rect_elfl[i].setAttribute('display',parafl);
+				}
+				for(var i=0;i<rect_elsh.length;++i){
+					rect_elsh[i].setAttribute('display',parash);
+				}
+			}
+
+			function remove_note(){	
+				var dead_line = 0;
+				var svg1 = document.getElementById("field01");
+				var rect_el = document.querySelectorAll(".note");
+
+				for(var i=0;i<rect_el.length;++i){
+					if(parseFloat(rect_el[i].getAttribute('cx')) <= dead_line){
+						svg1.removeChild(rect_el[i]);
+						make_();
+					}
+				}
+
+				//補助線を指定をする
+				var rect_el = document.querySelectorAll(".note_line");
+				for(var i=0;i<rect_el.length;++i){
+					if((parseFloat( rect_el[i].getAttribute('x1') ) <= dead_line ) &&
+						(parseFloat( rect_el[i].getAttribute('x2') ) <= dead_line )){
+							svg1.removeChild(rect_el[i]);
+					}
+				}
+
+				//♯座標指定をする
+				var rect_el = document.querySelectorAll(".♯");
+				for(var i=0;i<rect_el.length;++i){
+					if((parseFloat( rect_el[i].getAttribute('x1') ) <= dead_line ) &&
+						(parseFloat( rect_el[i].getAttribute('x2') ) <= dead_line )){
+							svg1.removeChild(rect_el[i]);
+					}
+				}
+
+				//♭座標指定をする
+				var rect_el = document.querySelectorAll(".♭");
+
+				for(var i=0;i<rect_el.length;++i){
+					if(rect_el[i].tagName == 'path'){
+						var zahyo = rect_el[i].getAttribute('d');
+						var e = zahyo.split(" ");
+						if(parseFloat(e[1]) <= dead_line &&
+							parseFloat(e[5]) <= dead_line &&
+							parseFloat(e[9]) <= dead_line &&
+							parseFloat(e[13]) <= dead_line){
+								svg1.removeChild(rect_el[i]);
+						}
+					}
+					if(rect_el[i].tagName == 'line'){
+						if((parseFloat( rect_el[i].getAttribute('x1') ) <= dead_line ) &&
+							(parseFloat( rect_el[i].getAttribute('x2') ) <= dead_line )){
+								svg1.removeChild(rect_el[i]);
+						}
+					}
+				}
+			}
+
+			function move1() {
+				reset_pos();
+				sound1();
+				remove_note();
+			}
+
+			function timer_SE(flag){
+				if(flag == 0){
+					timer = setInterval("move1()",1000/30);
+				} else {
+					clearInterval(timer);
+				}
+			}
+
+			function showVal(newVal){
+				document.getElementById("valBox2").innerHTML=newVal;
+			}
+
+
+		</script>
+	</head>
+	<body>
+		<svg id="field01" width="500" height="200">
+			<!--- 五線譜 --->
+			<line x1="0" y1="30" x2="300" y2="30" stroke="black" />
+			<line x1="0" y1="40" x2="300" y2="40" stroke="black" />
+			<line x1="0" y1="50" x2="300" y2="50" stroke="black" />
+			<line x1="0" y1="60" x2="300" y2="60" stroke="black" />
+			<line x1="0" y1="70" x2="300" y2="70" stroke="black" />
+			<line x1="0" y1="30" x2="0"   y2="70" stroke="black" />
+			<line x1="300" y1="30" x2="300"   y2="70" stroke="black" />
+			<line x1="20" y1="30" x2="20"   y2="70" stroke="black" />
+
+
+
+			<line x1="0" y1="110" x2="300" y2="110" stroke="black" />
+			<line x1="0" y1="120" x2="300" y2="120" stroke="black" />
+			<line x1="0" y1="130" x2="300" y2="130" stroke="black" />
+			<line x1="0" y1="140" x2="300" y2="140" stroke="black" />
+			<line x1="0" y1="150" x2="300" y2="150" stroke="black" />
+			<line x1="0" y1="110" x2="0"   y2="150" stroke="black" />
+			<line x1="300" y1="110" x2="300"   y2="150" stroke="black" />
+			<line x1="20" y1="110" x2="20"   y2="150" stroke="black" />
+
+		</svg>
+		<br>ボリューム
+		<span id="valBox1">0.0</span>
+		<br>
+		<input type="range" id="range_id1" min="0" max="1" step="0.05" value="0.0"
+		oninput="mute(this.value)" onchange="mute(this.value)">
+
+		<br>移動量
+		<span id="valBox2">-1</span>
+		<br>
+		<input type="range" id="range_id2" min="-7" max="0" step="0.1" value="-1"
+		oninput="showVal(this.value)" onchange="showVal(this.value)">
+
+		<script>
+			make_();
+			timer_SE(0);
+		</script>
+
+
+	</body>
+</html>

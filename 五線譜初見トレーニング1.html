@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+	<head>
+		<meta charset="UTF-8">
+		<title>初見トレーニング</title>
+		<script>
+			var flag = 1;
+			function random_img(){
+				if(	flag == 0 ){
+					flag = 1;
+					document.getElementById("answer").style = "visibility: visible;"
+				} else {
+					flag = 0;
+					document.getElementById("answer").style = "visibility: hidden;";
+					var datalist = [["C",2,170,5],
+									["D",2,165,1],
+									["E",2,160,2],
+									["F",2,155,0],
+									["G",2,150,0],
+									["A",2,145,0],
+									["B",2,140,0],
+									["C",3,135,0],
+									["D",3,130,0],
+									["E",3,125,0],
+									["F",3,120,0],
+									["G",3,115,0],
+									["A",3,110,0],
+									["B",3,105,0],
+									["C",4,100,2],
+									["D",4,95,3],
+									["B",3,85,1],
+									["C",4,80,2],
+									["D",4,75,0],
+									["E",4,70,0],
+									["F",4,65,0],
+									["G",4,60,0],
+									["A",4,55,0],
+									["B",4,50,0],
+									["C",5,45,0],
+									["D",5,40,0],
+									["E",5,35,0],
+									["F",5,30,0],
+									["G",5,25,0],
+									["A",5,20,2],
+									["B",5,15,3],
+									["C",6,10,4]];
+	
+					var selectnum = Math.floor(Math.random() * datalist.length);
+					document.getElementById("answer").innerHTML = datalist[selectnum][0];
+
+					var rect_el = document.querySelector(".note");
+					rect_el.setAttribute('cy',datalist[selectnum][2]);
+
+					var disp_ln01,disp_ln02;
+					if(datalist[selectnum][3] == 0){
+						disp_ln01 = "none";
+						disp_ln02 = "none";
+					} else if(datalist[selectnum][3] == 4 || datalist[selectnum][3] == 5){
+						disp_ln01 = "inline";
+						disp_ln02 = "inline";
+					} else {
+						disp_ln01 = "inline";
+						disp_ln02 = "none";
+					}
+
+				var line_y1 = 0,line_y2 = 0;
+				switch (datalist[selectnum][3]) {
+					case 1:
+						line_y1 = datalist[selectnum][2] - 5;
+						line_y2 = datalist[selectnum][2] - 5;
+						break;
+					case 2:
+						line_y1 = datalist[selectnum][2];
+						line_y2 = datalist[selectnum][2];
+						break;
+					case 3:
+						line_y1 = datalist[selectnum][2] + 5;
+						line_y2 = datalist[selectnum][2] + 5;
+						break;
+					case 4:
+						line_y1 = datalist[selectnum][2];
+						line_y2 = datalist[selectnum][2] + 10;
+						break;
+					case 5:
+						line_y1 = datalist[selectnum][2];
+						line_y2 = datalist[selectnum][2] - 10;
+						break;
+				}
+
+
+
+
+
+					var rect_el = document.querySelector(".note_line1");
+					rect_el.setAttribute("display",disp_ln01);
+					rect_el.setAttribute("y1",line_y1);
+					rect_el.setAttribute("y2",line_y1);
+
+					var rect_el = document.querySelector(".note_line2");
+					rect_el.setAttribute("display",disp_ln02);
+					rect_el.setAttribute("y1",line_y2);
+					rect_el.setAttribute("y2",line_y2);
+
+				};
+			}
+
+ 		</script>
+	</head>
+	<body >
+		<div id="answer">　</div>
+		<br>
+		<svg id="field01" width="500" height="200" onclick="random_img();">
+			<!--- 五線譜 --->
+			<line x1="5" y1="30" x2="80" y2="30" stroke="black" />
+			<line x1="5" y1="40" x2="80" y2="40" stroke="black" />
+			<line x1="5" y1="50" x2="80" y2="50" stroke="black" />
+			<line x1="5" y1="60" x2="80" y2="60" stroke="black" />
+			<line x1="5" y1="70" x2="80" y2="70" stroke="black" />
+			<line x1="5" y1="30" x2="5"   y2="70" stroke="black" />
+			<line x1="80" y1="30" x2="80"   y2="70" stroke="black" />
+
+
+			<line x1="5" y1="110" x2="80" y2="110" stroke="black" />
+			<line x1="5" y1="120" x2="80" y2="120" stroke="black" />
+			<line x1="5" y1="130" x2="80" y2="130" stroke="black" />
+			<line x1="5" y1="140" x2="80" y2="140" stroke="black" />
+			<line x1="5" y1="150" x2="80" y2="150" stroke="black" />
+			<line x1="5" y1="110" x2="5"   y2="150" stroke="black" />
+			<line x1="80" y1="110" x2="80"   y2="150" stroke="black" />
+
+			<ellipse class="note" cx="50" cy="10" rx="6" ry="4" fill-opacity="0.0" stroke="black" stroke-width=2.0 />
+			<line class="note_line1" x1="39" y1="10" x2="61" y2="10" stroke="black" stroke-width="2" display="inline"/>
+			<line class="note_line2" x1="39" y1="20" x2="61" y2="20" stroke="black" stroke-width="2" display="inline"/>
+
+		</svg>
+
+	</body>
+</html>
