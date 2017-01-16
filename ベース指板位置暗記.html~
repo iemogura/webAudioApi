@@ -94,10 +94,10 @@
 			}
  		</script>
 	</head>
-	<body onclick="random_question();">
+	<body >
 		<div id="answer">　</div>
 		<br>
-		<svg id="field01" width="800" height="180">
+		<svg id="field01" width="800" height="180" onclick="random_question();">
 		</svg>
 
 		<script>
